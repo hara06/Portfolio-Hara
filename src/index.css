@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --color-brand-blue: #2f5bea;
+  --color-brand-pink: #ff3d8b;
+  --color-brand-orange: #ff8a3d;
+  --color-brand-purple: #8b6ff0;
+  --color-brand-deep: #6a4bd6;
+  --color-ink: #14224f;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  @apply bg-white font-sans text-ink antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
