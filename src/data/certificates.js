@@ -33,6 +33,13 @@ export const certificates = [
     image: "/certificates/coursera-network-automation.webp",
     credentialUrl: "",
   },
+    {
+    title: "Microsoft 365 Fundamentals",
+    issuer: "Coursera",
+    year: "2023",
+    image: "/certificates/coursera-microsoft-365.webp",
+    credentialUrl: "",
+  },
   {
     title: "System Administration and IT Infrastructure Services",
     issuer: "Coursera",

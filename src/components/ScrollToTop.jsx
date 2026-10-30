@@ -1,5 +1,5 @@
-/*Section ScrollToTop
-File: ScrollToTop.jsx*/
+/* Section ScrollToTop
+File: src/components/ScrollToTop.jsx */
 
 import { useEffect, useState } from "react";
 
@@ -25,7 +25,7 @@ export default function ScrollToTop() {
       aria-label="Kembali ke atas"
       aria-hidden={!visible}
       tabIndex={visible ? 0 : -1}
-      className={`fixed bottom-5 right-5 z-40 grid size-12 place-items-center rounded-full bg-brand-blue text-white shadow-lg shadow-brand-blue/40 transition duration-300 hover:bg-brand-pink hover:shadow-brand-pink/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue ${
+      className={`fixed bottom-5 right-5 z-40 grid size-11 place-items-center rounded-full bg-brand-navy text-white shadow-lg shadow-brand-navy/30 transition duration-300 hover:bg-brand-teal hover:shadow-brand-teal/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-teal ${
         visible
           ? "translate-y-0 opacity-100"
           : "pointer-events-none translate-y-3 opacity-0"

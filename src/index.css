@@ -1,15 +1,21 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 
-  --color-brand-blue: #2f5bea;
-  --color-brand-pink: #ff3d8b;
-  --color-brand-orange: #ff8a3d;
-  --color-brand-purple: #8b6ff0;
-  --color-brand-deep: #6a4bd6;
-  --color-ink: #14224f;
+  /* Navy gelap, putih, dan teal sebagai aksen */
+  --color-ink: #0b1d3a;
+  --color-brand-navy: #0b1d3a;
+  --color-brand-navy-soft: #16305c;
+  --color-brand-teal: #14b8a6;
+  --color-brand-teal-dark: #0f766e;
+  --color-brand-teal-soft: #e6f7f5;
+
+  @keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
 }
 
 html {

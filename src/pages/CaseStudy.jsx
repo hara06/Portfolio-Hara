@@ -1,5 +1,6 @@
-/* Page CaseStudy
-File: src/pages/CaseStudy.jsx */
+/* Page CaseStudy (detail project)
+File: src/pages/CaseStudy.jsx
+Route: /projects/:slug */
 
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -8,7 +9,7 @@ import { projects, dotColor } from "../data/projects";
 function Block({ title, children }) {
   return (
     <section className="mt-10">
-      <h2 className="font-display text-xl font-bold">{title}</h2>
+      <h2 className="text-xl font-bold text-brand-navy">{title}</h2>
       <div className="mt-3">{children}</div>
     </section>
   );
@@ -21,7 +22,7 @@ function BulletList({ items }) {
         <li key={item} className="flex gap-3">
           <span
             aria-hidden="true"
-            className="mt-2.5 size-1.5 shrink-0 rounded-full bg-brand-purple"
+            className="mt-2.5 size-1.5 shrink-0 rounded-full bg-brand-teal"
           />
           {item}
         </li>
@@ -35,7 +36,7 @@ export default function CaseStudy() {
   const index = projects.findIndex((p) => p.slug === slug);
   const project = projects[index];
 
-  // Halaman selalu dibuka dari atas, termasuk saat pindah ke proyek berikutnya
+  // Halaman selalu dibuka dari atas, termasuk saat pindah ke project berikutnya
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
   }, [slug]);
@@ -43,14 +44,14 @@ export default function CaseStudy() {
   if (!project) {
     return (
       <section className="mx-auto max-w-3xl px-5 py-32 text-center">
-        <h1 className="font-display text-3xl font-bold">
-          Proyek tidak ditemukan
+        <h1 className="text-3xl font-bold text-brand-navy">
+          Project tidak ditemukan
         </h1>
         <Link
-          to="/#projects"
-          className="mt-6 inline-block font-semibold text-brand-deep hover:underline"
+          to="/projects"
+          className="mt-6 inline-block font-semibold text-brand-teal-dark hover:underline"
         >
-          ← Kembali ke proyek
+          ← Kembali ke semua project
         </Link>
       </section>
     );
@@ -62,17 +63,17 @@ export default function CaseStudy() {
   return (
     <article className="mx-auto max-w-3xl px-5 pb-24 pt-28">
       <Link
-        to="/#projects"
-        className="text-sm font-semibold text-brand-deep hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-deep"
+        to="/projects"
+        className="text-sm font-semibold text-brand-teal-dark hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-teal"
       >
-        ← Kembali ke proyek
+        ← Kembali ke semua project
       </Link>
 
       {project.image ? (
         <img
           src={project.image}
           alt={`Tampilan ${project.title}`}
-          className="mt-6 w-full rounded-3xl border border-brand-purple/10"
+          className="mt-6 w-full rounded-3xl border border-ink/10"
         />
       ) : (
         <div
@@ -81,7 +82,7 @@ export default function CaseStudy() {
         />
       )}
 
-      <h1 className="mt-8 font-display text-3xl font-bold leading-tight sm:text-4xl">
+      <h1 className="mt-8 text-3xl font-extrabold leading-tight tracking-tight text-brand-navy sm:text-4xl">
         {project.title}
       </h1>
 
@@ -89,7 +90,7 @@ export default function CaseStudy() {
         {project.tags.map((tag) => (
           <li key={tag} className="flex items-center gap-1.5 text-xs text-ink/70">
             <span
-              className={`size-2 rounded-full ${dotColor[tag]}`}
+              className={`size-2 rounded-full ${dotColor[tag] ?? "bg-brand-navy"}`}
               aria-hidden="true"
             />
             {tag}
@@ -98,7 +99,7 @@ export default function CaseStudy() {
       </ul>
 
       {/* Ringkasan singkat */}
-      <dl className="mt-6 grid gap-4 rounded-2xl bg-brand-purple/5 p-5 sm:grid-cols-3">
+      <dl className="mt-6 grid gap-4 rounded-2xl bg-brand-teal-soft/60 p-5 sm:grid-cols-3">
         <div>
           <dt className="text-xs font-medium text-ink/65">Peran</dt>
           <dd className="mt-1 text-sm font-semibold">{project.role}</dd>
@@ -120,7 +121,7 @@ export default function CaseStudy() {
               href={links.demo}
               target="_blank"
               rel="noreferrer"
-              className="rounded-md bg-brand-deep px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-deep/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-deep"
+              className="rounded-lg bg-brand-navy px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-navy-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-teal"
             >
               Lihat demo
             </a>
@@ -130,7 +131,7 @@ export default function CaseStudy() {
               href={links.repo}
               target="_blank"
               rel="noreferrer"
-              className="rounded-md border border-brand-deep/40 px-5 py-2.5 text-sm font-semibold text-brand-deep transition hover:bg-brand-purple/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-deep"
+              className="rounded-lg border border-brand-navy/20 px-5 py-2.5 text-sm font-semibold text-brand-navy transition hover:bg-brand-teal-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-teal"
             >
               Kode sumber
             </a>
@@ -178,7 +179,7 @@ export default function CaseStudy() {
             {project.tech.map((t) => (
               <li
                 key={t}
-                className="rounded-full bg-brand-purple/10 px-3 py-1 text-xs font-medium text-ink/70"
+                className="rounded-full bg-brand-teal-soft px-3 py-1 text-xs font-medium text-brand-teal-dark"
               >
                 {t}
               </li>
@@ -188,11 +189,11 @@ export default function CaseStudy() {
       )}
 
       {next.slug !== project.slug && (
-        <div className="mt-14 border-t border-brand-purple/15 pt-6">
-          <p className="text-sm text-ink/65">Proyek berikutnya</p>
+        <div className="mt-14 border-t border-ink/10 pt-6">
+          <p className="text-sm text-ink/65">Project berikutnya</p>
           <Link
             to={`/projects/${next.slug}`}
-            className="mt-1 inline-block font-display text-lg font-bold text-brand-deep hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-deep"
+            className="mt-1 inline-block text-lg font-bold text-brand-teal-dark hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-teal"
           >
             {next.title} <span aria-hidden="true">→</span>
           </Link>

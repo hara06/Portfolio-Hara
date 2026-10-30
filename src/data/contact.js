@@ -1,12 +1,15 @@
 /* Data kontak (satu sumber untuk Contact dan Footer)
 File: src/data/contact.js */
 
-// TODO: ganti semua nilai di bawah dengan data aslimu
-export const CV_URL = "/cv.pdf";
+export const cvOptions = [
+  { label: "Admin Backoffice", file: "/cv/CV-Admin-Backoffice.pdf" },
+  { label: "Web Developer", file: "/cv/CV-Web-Developer.pdf" },
+  { label: "Data Analyst", file: "/cv/CV-Data-Analyst.pdf" },
+];
 
 export const profile = {
   name: "Pretty Ohara Hutasoit",
-  role: "Web Developer & Data Administrator",
+  role: "Web Developer & Data Enthusiast",
   location: "Medan, Indonesia",
   email: "emailkamu@gmail.com",
 };

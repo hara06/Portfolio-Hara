@@ -2,13 +2,14 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
-import Projects from "./components/Projects";
-import Certificates from "./components/Certificates";
-import Experience from "./components/Experience";
+import Skills from "./components/Skills";
+import FeaturedProjects from "./components/FeaturedProjects";
+import Journey from "./components/Journey";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import ScrollManager from "./components/ScrollManager";
+import ProjectsPage from "./pages/ProjectsPage";
 import CaseStudy from "./pages/CaseStudy";
 import ExperienceDetail from "./pages/ExperienceDetail";
 
@@ -17,9 +18,9 @@ function Home() {
     <>
       <Hero />
       <About />
-      <Projects />
-      <Certificates />
-      <Experience />
+      <Skills />
+      <FeaturedProjects />
+      <Journey />
       <Contact />
     </>
   );
@@ -33,6 +34,7 @@ export default function App() {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/projects/:slug" element={<CaseStudy />} />
           <Route path="/experience/:slug" element={<ExperienceDetail />} />
         </Routes>

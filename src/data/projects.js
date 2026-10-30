@@ -1,11 +1,14 @@
 /* Data Projects
 File: src/data/projects.js
 Field yang kosong ([] atau "") otomatis disembunyikan di halaman.
+featured: true  -> tampil di Featured Projects (landing page). Maksimal 3 yang dipakai,
+                   idealnya satu dari setiap bidang.
 Isi bagian TODO dengan fakta dan angka asli, jangan ditebak. */
 
 export const projects = [
   {
     slug: "ikpad-dashboard",
+    featured: true,
     title: "Dashboard Pemantauan IKPAD",
     role: "Web Developer",
     period: "Jun – Agu 2026",
@@ -47,11 +50,12 @@ export const projects = [
     links: {}, // contoh: { demo: "https://...", repo: "https://github.com/..." }
     image: "", // contoh: "/projects/ikpad.png" (taruh di public/projects/, gunakan data dummy)
     tags: ["Web Development", "Data"],
-    tone: "from-brand-blue/20 to-brand-purple/20",
+    tone: "from-brand-navy/20 to-brand-teal/20",
   },
 
   {
     slug: "risk-monitoring-dashboard",
+    featured: true,
     title: "Dashboard Pemantauan Risiko",
     role: "Asisten Staf SKKI (Magang)",
     period: "Jan – Mar 2026",
@@ -79,12 +83,13 @@ export const projects = [
 
     links: {},
     image: "",
-    tags: ["Web Development", "Data"],
-    tone: "from-brand-purple/20 to-brand-pink/15",
+    tags: ["Data", "Web Development"],
+    tone: "from-brand-teal/20 to-brand-navy/20",
   },
 
   {
     slug: "sistem-pencarian-peternakan",
+    featured: false,
     title: "Sistem Pencarian & Detail Peternakan",
     role: "Full-Stack Developer",
     period: "Apr – Jun 2023",
@@ -110,11 +115,12 @@ export const projects = [
     links: {},
     image: "",
     tags: ["Web Development"],
-    tone: "from-brand-blue/20 to-brand-orange/15",
+    tone: "from-brand-navy/20 to-brand-teal/15",
   },
 
   {
     slug: "toba-game",
+    featured: true,
     title: "TOBA: Awal Sebuah Legenda",
     role: "Developer (Tugas Akhir)",
     period: "Jun 2024 – Jan 2025",
@@ -140,12 +146,12 @@ export const projects = [
     links: {},
     image: "",
     tags: ["Game Development"],
-    tone: "from-brand-orange/20 to-brand-pink/15",
+    tone: "from-brand-navy-soft/25 to-brand-teal/20",
   },
 ];
 
 export const dotColor = {
-  "Web Development": "bg-brand-blue",
-  Data: "bg-brand-orange",
-  "Game Development": "bg-brand-purple",
+  "Web Development": "bg-brand-navy",
+  Data: "bg-brand-teal",
+  "Game Development": "bg-brand-teal-dark",
 };

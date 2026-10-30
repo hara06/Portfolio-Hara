@@ -11,24 +11,9 @@ Dokumen (SK, surat tugas): samarkan nama, tanda tangan, dan data pribadi dulu
 sebelum dipasang. Isi number dan/atau image di field `document`. */
 
 export const categories = [
-  {
-    id: "kerja",
-    title: "Pengalaman kerja",
-    note: "Magang dan asisten laboratorium.",
-    dot: "bg-brand-blue",
-  },
-  {
-    id: "organisasi",
-    title: "Pengalaman organisasi",
-    note: "Peran saya di organisasi kemahasiswaan.",
-    dot: "bg-brand-purple",
-  },
-  {
-    id: "kepanitiaan",
-    title: "Pengalaman kepanitiaan",
-    note: "Peran saya di kepanitiaan kegiatan kampus.",
-    dot: "bg-brand-orange",
-  },
+  { id: "kerja", title: "Pengalaman kerja", note: "Magang dan asisten laboratorium.", dot: "bg-brand-navy" },
+  { id: "organisasi", title: "Pengalaman organisasi", note: "Peran saya di organisasi kemahasiswaan.", dot: "bg-brand-teal" },
+  { id: "kepanitiaan", title: "Pengalaman kepanitiaan", note: "Peran saya di kepanitiaan kegiatan kampus.", dot: "bg-brand-teal-dark" },
 ];
 
 export const experiences = [
@@ -50,7 +35,7 @@ export const experiences = [
     document: null,
     cover: "",
     photos: [],
-    tone: "from-brand-blue/20 to-brand-purple/20",
+    tone: "from-brand-teal/20 to-brand-navy/10",
   },
   {
     slug: "asisten-laboratorium-jaringan",
@@ -68,7 +53,7 @@ export const experiences = [
     document: { label: "SK Asisten Laboratorium", number: "", image: "" },
     cover: "",
     photos: [],
-    tone: "from-brand-purple/20 to-brand-blue/15",
+    tone: "from-brand-teal/20 to-brand-navy/10",
   },
 
   /* ---------- Pengalaman organisasi ---------- */
@@ -87,7 +72,7 @@ export const experiences = [
     document: { label: "SK Kepengurusan", number: "", image: "" },
     cover: "",
     photos: [],
-    tone: "from-brand-purple/20 to-brand-pink/15",
+    tone: "from-brand-teal/20 to-brand-navy/10",
   },
 
   /* ---------- Pengalaman kepanitiaan ---------- */
@@ -105,7 +90,7 @@ export const experiences = [
     document: { label: "SK Kepanitiaan", number: "", image: "" },
     cover: "",
     photos: [],
-    tone: "from-brand-orange/20 to-brand-pink/15",
+    tone: "from-brand-teal/20 to-brand-navy/10",
   },
   {
     slug: "bendahara-natal-2022",
@@ -122,7 +107,7 @@ export const experiences = [
     document: { label: "SK Kepanitiaan", number: "", image: "" },
     cover: "",
     photos: [],
-    tone: "from-brand-pink/15 to-brand-orange/20",
+    tone: "from-brand-teal/20 to-brand-navy/10",
   },
   {
     slug: "bendahara-pmb-2022",
@@ -138,6 +123,6 @@ export const experiences = [
     document: { label: "SK Kepanitiaan", number: "", image: "" },
     cover: "",
     photos: [],
-    tone: "from-brand-blue/15 to-brand-orange/20",
+    tone: "from-brand-teal/20 to-brand-navy/10",
   },
 ];

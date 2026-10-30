@@ -9,7 +9,7 @@ import { experiences, categories } from "../data/experiences";
 function Block({ title, children }) {
   return (
     <section className="mt-10">
-      <h2 className="font-display text-xl font-bold">{title}</h2>
+      <h2 className="text-xl font-bold text-brand-navy">{title}</h2>
       <div className="mt-3">{children}</div>
     </section>
   );
@@ -22,7 +22,7 @@ function BulletList({ items }) {
         <li key={item} className="flex gap-3">
           <span
             aria-hidden="true"
-            className="mt-2.5 size-1.5 shrink-0 rounded-full bg-brand-purple"
+            className="mt-2.5 size-1.5 shrink-0 rounded-full bg-brand-teal"
           />
           {item}
         </li>
@@ -38,7 +38,7 @@ function Photo({ src, alt, className }) {
   if (!src || failed) {
     return (
       <div
-        className={`grid place-items-center bg-brand-purple/10 p-4 text-center text-xs font-medium text-ink/65 ${className}`}
+        className={`grid place-items-center bg-brand-teal-soft p-4 text-center text-xs font-medium text-ink/65 ${className}`}
       >
         Foto belum tersedia
       </div>
@@ -86,7 +86,7 @@ function Gallery({ photos, label, columns = "grid-cols-2 sm:grid-cols-3" }) {
               type="button"
               onClick={() => open(i)}
               aria-haspopup="dialog"
-              className="block w-full overflow-hidden rounded-xl border border-brand-purple/10 transition hover:border-brand-purple/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-deep"
+              className="block w-full overflow-hidden rounded-xl border border-ink/10 transition hover:border-brand-teal focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-teal"
             >
               <Photo
                 src={p.src}
@@ -110,7 +110,7 @@ function Gallery({ photos, label, columns = "grid-cols-2 sm:grid-cols-3" }) {
           if (e.key === "ArrowLeft") go(-1);
         }}
         aria-label={`Foto ${label}`}
-        className="m-auto w-[92vw] max-w-4xl rounded-2xl bg-white p-0 backdrop:bg-ink/70"
+        className="m-auto w-[92vw] max-w-4xl rounded-2xl bg-white p-0 text-ink backdrop:bg-brand-navy/80"
       >
         {photo && (
           <div className="relative p-4 sm:p-6">
@@ -118,7 +118,7 @@ function Gallery({ photos, label, columns = "grid-cols-2 sm:grid-cols-3" }) {
               type="button"
               onClick={close}
               aria-label="Tutup"
-              className="absolute right-3 top-3 z-10 grid size-10 place-items-center rounded-full bg-white/90 text-ink shadow hover:bg-brand-purple/10 focus-visible:outline-2 focus-visible:outline-brand-deep"
+              className="absolute right-3 top-3 z-10 grid size-10 place-items-center rounded-full bg-white/90 text-ink shadow hover:bg-brand-teal-soft focus-visible:outline-2 focus-visible:outline-brand-teal"
             >
               <svg
                 className="size-5"
@@ -150,7 +150,7 @@ function Gallery({ photos, label, columns = "grid-cols-2 sm:grid-cols-3" }) {
                   <button
                     type="button"
                     onClick={() => go(-1)}
-                    className="rounded-md border border-brand-deep/40 px-3 py-1.5 text-sm font-semibold text-brand-deep hover:bg-brand-purple/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-deep"
+                    className="rounded-lg border border-brand-navy/20 px-3 py-1.5 text-sm font-semibold text-brand-navy transition hover:bg-brand-teal-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-teal"
                   >
                     <span aria-hidden="true">←</span>
                     <span className="sr-only">Foto sebelumnya</span>
@@ -158,7 +158,7 @@ function Gallery({ photos, label, columns = "grid-cols-2 sm:grid-cols-3" }) {
                   <button
                     type="button"
                     onClick={() => go(1)}
-                    className="rounded-md border border-brand-deep/40 px-3 py-1.5 text-sm font-semibold text-brand-deep hover:bg-brand-purple/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-deep"
+                    className="rounded-lg border border-brand-navy/20 px-3 py-1.5 text-sm font-semibold text-brand-navy transition hover:bg-brand-teal-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-teal"
                   >
                     <span aria-hidden="true">→</span>
                     <span className="sr-only">Foto berikutnya</span>
@@ -186,14 +186,14 @@ export default function ExperienceDetail() {
   if (!exp) {
     return (
       <section className="mx-auto max-w-3xl px-5 py-32 text-center">
-        <h1 className="font-display text-3xl font-bold">
+        <h1 className="text-3xl font-bold text-brand-navy">
           Kegiatan tidak ditemukan
         </h1>
         <Link
-          to="/#experience"
-          className="mt-6 inline-block font-semibold text-brand-deep hover:underline"
+          to="/#journey"
+          className="mt-6 inline-block font-semibold text-brand-teal-dark hover:underline"
         >
-          ← Kembali ke pengalaman
+          ← Kembali ke perjalanan
         </Link>
       </section>
     );
@@ -207,17 +207,17 @@ export default function ExperienceDetail() {
   return (
     <article className="mx-auto max-w-3xl px-5 pb-24 pt-28">
       <Link
-        to="/#experience"
-        className="text-sm font-semibold text-brand-deep hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-deep"
+        to="/#journey"
+        className="text-sm font-semibold text-brand-teal-dark hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-teal"
       >
-        ← Kembali ke pengalaman
+        ← Kembali ke perjalanan
       </Link>
 
       {cover ? (
         <img
           src={cover}
           alt={`Dokumentasi ${exp.role}, ${exp.place}`}
-          className="mt-6 h-56 w-full rounded-3xl border border-brand-purple/10 object-cover sm:h-72"
+          className="mt-6 h-56 w-full rounded-3xl border border-ink/10 object-cover sm:h-72"
         />
       ) : (
         <div
@@ -236,13 +236,13 @@ export default function ExperienceDetail() {
         </p>
       )}
 
-      <h1 className="mt-2 font-display text-3xl font-bold leading-tight sm:text-4xl">
+      <h1 className="mt-2 text-3xl font-extrabold leading-tight tracking-tight text-brand-navy sm:text-4xl">
         {exp.role}
       </h1>
-      <p className="mt-2 font-medium text-brand-blue">{exp.place}</p>
+      <p className="mt-2 font-medium text-brand-teal-dark">{exp.place}</p>
 
       {/* Ringkasan singkat */}
-      <dl className="mt-6 grid gap-4 rounded-2xl bg-brand-purple/5 p-5 sm:grid-cols-2">
+      <dl className="mt-6 grid gap-4 rounded-2xl bg-brand-teal-soft/60 p-5 sm:grid-cols-2">
         <div>
           <dt className="text-xs font-medium text-ink/65">Periode</dt>
           <dd className="mt-1 text-sm font-semibold">{exp.period}</dd>
@@ -290,11 +290,11 @@ export default function ExperienceDetail() {
       )}
 
       {next.slug !== exp.slug && (
-        <div className="mt-14 border-t border-brand-purple/15 pt-6">
+        <div className="mt-14 border-t border-ink/10 pt-6">
           <p className="text-sm text-ink/65">Kegiatan berikutnya</p>
           <Link
             to={`/experience/${next.slug}`}
-            className="mt-1 inline-block font-display text-lg font-bold text-brand-deep hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-deep"
+            className="mt-1 inline-block text-lg font-bold text-brand-teal-dark hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-teal"
           >
             {next.role} · {next.place} <span aria-hidden="true">→</span>
           </Link>
