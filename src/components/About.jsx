@@ -4,7 +4,7 @@ File: src/components/About.jsx */
 const infoCards = [
   {
     label: "Pendidikan",
-    title: "Sarjana Teknologi Informasi",
+    value: "Sarjana Teknologi Informasi",
     detail: "Universitas Sumatera Utara",
     icon: (
       <>
@@ -15,8 +15,8 @@ const infoCards = [
   },
   {
     label: "IPK",
-    title: "3,77/4,00",
-    detail: "Lulusan dengan capaian akademik sangat baik",
+    value: "3,77/4,00",
+    detail: "Capaian akademik sangat baik",
     icon: (
       <>
         <circle cx="12" cy="9" r="5" />
@@ -26,8 +26,8 @@ const infoCards = [
   },
   {
     label: "Pengalaman",
-    title: "Asisten Staf SKKI (Magang)",
-    detail: "Kanwil DJPb Provinsi Sumatera Utara",
+    value: "Asisten Staf SKKI",
+    detail: "Kanwil DJPb Sumatera Utara",
     icon: (
       <>
         <rect x="3" y="7" width="18" height="13" rx="2" />
@@ -35,33 +35,19 @@ const infoCards = [
       </>
     ),
   },
+  {
+    label: "Bidang minat",
+    value: "Admin, Web, Data",
+    detail: "Administrasi, web, dan analisis data",
+    icon: (
+      <>
+        <circle cx="12" cy="12" r="9" />
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 3v3M12 18v3M3 12h3M18 12h3" />
+      </>
+    ),
+  },
 ];
-
-const interests = ["Administration", "Web", "Data"];
-
-function CardIcon({ children }) {
-  return (
-    <span
-      aria-hidden="true"
-      className="grid size-10 shrink-0 place-items-center rounded-lg bg-brand-teal-soft text-brand-teal-dark"
-    >
-      <svg
-        className="size-5"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.75"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        viewBox="0 0 24 24"
-      >
-        {children}
-      </svg>
-    </span>
-  );
-}
-
-const cardClass =
-  "flex items-start gap-3 rounded-xl border border-ink/10 bg-white p-4";
 
 export default function About() {
   return (
@@ -70,25 +56,21 @@ export default function About() {
       aria-labelledby="about-title"
       className="relative z-10 -mt-10 scroll-mt-16 rounded-t-[2.5rem] bg-white px-5 pb-12 pt-12 shadow-[0_-24px_40px_-24px_rgba(15,23,42,0.12)] lg:-mt-16 lg:rounded-t-[4rem] lg:pb-16 lg:pt-16"
     >
-      <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.8fr)] lg:gap-14">
-        {/* Kiri: judul */}
-        <div className="lg:sticky lg:top-24 lg:self-start">
-          <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-brand-teal-dark">
-            <span aria-hidden="true" className="h-px w-5 bg-brand-teal" />
+      <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.1fr_1fr] lg:items-stretch lg:gap-12">
+        {/* Kiri: judul + ringkasan */}
+        <div className="flex flex-col justify-center">
+          <p className="inline-block self-start rounded-md bg-brand-teal-soft px-3 py-1 text-xs font-semibold uppercase tracking-wider text-brand-teal-dark">
             Get to know me
           </p>
 
           <h2
             id="about-title"
-            className="mt-3 text-2xl font-extrabold tracking-tight text-brand-navy sm:text-3xl lg:text-4xl"
+            className="mt-3 text-2xl font-extrabold leading-tight tracking-tight text-brand-navy sm:text-3xl lg:text-4xl"
           >
             Tentang <span className="text-brand-teal">Saya</span>
           </h2>
-        </div>
 
-        {/* Kanan: deskripsi + info singkat */}
-        <div>
-          <div className="max-w-2xl space-y-3 text-sm leading-relaxed text-ink/75 sm:text-base">
+          <div className="mt-4 space-y-3 text-sm leading-relaxed text-ink/75 sm:text-base">
             <p>
               Saya tertarik pada pemanfaatan teknologi untuk meningkatkan
               efisiensi kerja, baik melalui pengelolaan administrasi yang
@@ -101,48 +83,41 @@ export default function About() {
               membangun solusi digital, dan menyajikan data secara sistematis.
             </p>
           </div>
-
-          {/* Informasi singkat */}
-          <ul className="mt-6 grid gap-3 sm:grid-cols-2">
-            {infoCards.map((card) => (
-              <li key={card.label} className={cardClass}>
-                <CardIcon>{card.icon}</CardIcon>
-                <div className="min-w-0">
-                  <p className="text-[11px] font-semibold uppercase tracking-wider text-ink/60">
-                    {card.label}
-                  </p>
-                  <p className="mt-0.5 text-sm font-bold text-brand-navy">
-                    {card.title}
-                  </p>
-                  <p className="mt-0.5 text-xs text-ink/70">{card.detail}</p>
-                </div>
-              </li>
-            ))}
-
-            <li className={cardClass}>
-              <CardIcon>
-                <circle cx="12" cy="12" r="9" />
-                <circle cx="12" cy="12" r="4" />
-                <path d="M12 3v3M12 18v3M3 12h3M18 12h3" />
-              </CardIcon>
-              <div className="min-w-0">
-                <p className="text-[11px] font-semibold uppercase tracking-wider text-ink/60">
-                  Bidang minat
-                </p>
-                <ul className="mt-1.5 flex flex-wrap gap-1.5">
-                  {interests.map((item) => (
-                    <li
-                      key={item}
-                      className="rounded-full bg-brand-teal-soft px-3 py-1 text-xs font-semibold text-brand-teal-dark"
-                    >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </li>
-          </ul>
         </div>
+
+        {/* Kanan: 4 kartu info, mengisi tinggi kolom */}
+        <ul className="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-ink/10 bg-ink/10 sm:grid-cols-2 sm:grid-rows-2">
+          {infoCards.map((card) => (
+            <li key={card.label} className="flex flex-col bg-white p-5">
+              <span
+                aria-hidden="true"
+                className="grid size-10 place-items-center rounded-xl bg-brand-teal-soft text-brand-teal-dark"
+              >
+                <svg
+                  className="size-5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.75"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  viewBox="0 0 24 24"
+                >
+                  {card.icon}
+                </svg>
+              </span>
+
+              <p className="mt-3 text-[11px] font-semibold uppercase tracking-wider text-ink/60">
+                {card.label}
+              </p>
+              <p className="mt-1 text-base font-extrabold leading-snug text-brand-navy sm:text-lg">
+                {card.value}
+              </p>
+              <p className="mt-1 text-xs leading-relaxed text-ink/70">
+                {card.detail}
+              </p>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

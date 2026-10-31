@@ -73,11 +73,15 @@ export default function CaseStudy() {
         <img
           src={project.image}
           alt={`Tampilan ${project.title}`}
-          className="mt-6 w-full rounded-3xl border border-ink/10"
+          className={`mt-6 aspect-[20/9] w-full rounded-3xl border border-ink/10 object-cover ${
+            project.imagePosition ?? "object-top"
+          }`}
+          fetchPriority="high"
+          decoding="async"
         />
       ) : (
         <div
-          className={`mt-6 h-48 rounded-3xl bg-gradient-to-br ${project.tone}`}
+          className={`mt-6 aspect-[20/9] w-full rounded-3xl bg-gradient-to-br ${project.tone}`}
           aria-hidden="true"
         />
       )}

@@ -1,8 +1,13 @@
 /* Section Journey: pengalaman per kategori + sertifikat
-File: src/components/Journey.jsx */
+File: src/components/Journey.jsx
 
+Filter posisi: pengalaman yang tidak relevan diredupkan, bukan disembunyikan,
+supaya tinggi kartu dan susunan dua kolom tidak berubah saat filter diganti.
+Butuh export `positions` dan field `focus` di src/data/experiences.js. */
+
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { experiences, categories } from "../data/experiences";
+import { experiences, categories, positions } from "../data/experiences";
 import CertificateList from "./CertificateList";
 
 // Gaya per kategori: ikon dan warna titik pada timeline
@@ -38,7 +43,12 @@ const categoryStyle = {
 
 const fallbackStyle = categoryStyle.kerja;
 
-// Ambil satu kategori beserta isinya
+// Pengalaman dianggap relevan kalau filter "all" atau posisinya tercantum di `focus`
+function isMatch(exp, filter) {
+  return filter === "all" || Boolean(exp.focus?.includes(filter));
+}
+
+// Ambil satu kategori beserta isinya (semua item tetap ikut, filter hanya meredupkan)
 function getGroup(id) {
   const cat = categories.find((c) => c.id === id);
   return { ...cat, items: experiences.filter((e) => e.category === id) };
@@ -48,16 +58,51 @@ const kerja = getGroup("kerja");
 const organisasi = getGroup("organisasi");
 const kepanitiaan = getGroup("kepanitiaan");
 
-function Timeline({ items }) {
+function PositionFilter({ filter, onChange }) {
+  return (
+    <div
+      role="group"
+      aria-label="Filter pengalaman berdasarkan posisi"
+      className="flex flex-wrap gap-2"
+    >
+      {positions.map((p) => {
+        const active = filter === p.id;
+        return (
+          <button
+            key={p.id}
+            type="button"
+            onClick={() => onChange(p.id)}
+            aria-pressed={active}
+            className={`rounded-full px-4 py-1.5 text-xs font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-teal ${
+              active
+                ? "bg-brand-navy text-white shadow-sm shadow-brand-navy/20"
+                : "bg-brand-teal-soft text-brand-teal-dark hover:bg-brand-teal/20"
+            }`}
+          >
+            {p.label}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+function Timeline({ items, filter }) {
   return (
     <ol className="mt-4 space-y-3">
       {items.map((exp, i) => {
         const style = categoryStyle[exp.category] ?? fallbackStyle;
         const isFirst = i === 0;
         const isLast = i === items.length - 1;
+        const dimmed = !isMatch(exp, filter);
 
         return (
-          <li key={exp.slug} className="relative pl-9">
+          <li
+            key={exp.slug}
+            className={`relative pl-9 transition-opacity duration-300 ${
+              dimmed ? "opacity-40 hover:opacity-100 focus-within:opacity-100" : ""
+            }`}
+          >
             {/* Garis penghubung antar node; tidak muncul kalau hanya satu item */}
             {items.length > 1 && (
               <span
@@ -122,8 +167,11 @@ function Timeline({ items }) {
 }
 
 // Kartu per kategori; h-full supaya tingginya mengikuti kartu di sebelahnya
-function ExperienceCard({ group, titleId }) {
+function ExperienceCard({ group, titleId, filter }) {
   if (group.items.length === 0) return null;
+
+  // Badge menampilkan jumlah yang relevan dengan filter aktif
+  const matched = group.items.filter((e) => isMatch(e, filter)).length;
 
   return (
     <section
@@ -138,17 +186,23 @@ function ExperienceCard({ group, titleId }) {
           {group.title}
         </h3>
         <span className="rounded-full bg-brand-teal-soft px-2.5 py-0.5 text-xs font-semibold text-brand-teal-dark">
-          {group.items.length}
+          {matched}
         </span>
       </div>
       <div className="flex flex-1 flex-col">
-        <Timeline items={group.items} />
+        <Timeline items={group.items} filter={filter} />
       </div>
     </section>
   );
 }
 
 export default function Journey() {
+  const [filter, setFilter] = useState("all");
+
+  const total = experiences.length;
+  const matchedTotal = experiences.filter((e) => isMatch(e, filter)).length;
+  const activeLabel = positions.find((p) => p.id === filter)?.label;
+
   return (
     <section
       id="journey"
@@ -174,20 +228,42 @@ export default function Journey() {
           </p>
         </div>
 
-              {/* Dua kolom; kartu terakhir di tiap kolom meregang supaya tepi bawah sejajar */}
-        <div className="mt-6 grid gap-5 lg:grid-cols-[1.25fr_1fr]">
+        {/* Filter posisi: label sama dengan bubble di Hero */}
+        <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <PositionFilter filter={filter} onChange={setFilter} />
+          <p
+            aria-live="polite"
+            className="text-xs text-ink/70 sm:text-right"
+          >
+            {filter === "all"
+              ? `${total} pengalaman`
+              : `${matchedTotal} dari ${total} pengalaman relevan untuk ${activeLabel}`}
+          </p>
+        </div>
+
+        {/* Dua kolom; kartu terakhir di tiap kolom meregang supaya tepi bawah sejajar */}
+        <div className="mt-5 grid gap-5 lg:grid-cols-[1.25fr_1fr]">
           <div className="flex flex-col gap-5">
-            <ExperienceCard group={kerja} titleId="journey-kerja" />
+            <ExperienceCard
+              group={kerja}
+              titleId="journey-kerja"
+              filter={filter}
+            />
             <div className="flex-1">
               <ExperienceCard
                 group={kepanitiaan}
                 titleId="journey-kepanitiaan"
+                filter={filter}
               />
             </div>
           </div>
 
           <div className="flex flex-col gap-5">
-            <ExperienceCard group={organisasi} titleId="journey-organisasi" />
+            <ExperienceCard
+              group={organisasi}
+              titleId="journey-organisasi"
+              filter={filter}
+            />
 
             <div className="flex flex-1 flex-col rounded-3xl bg-brand-navy p-5 text-white shadow-md shadow-brand-navy/20 lg:p-6">
               <h3 className="text-lg font-extrabold sm:text-xl">

@@ -16,11 +16,20 @@ export const categories = [
   { id: "kepanitiaan", title: "Pengalaman kepanitiaan", note: "Peran saya di kepanitiaan kegiatan kampus.", dot: "bg-brand-teal-dark" },
 ];
 
+export const positions = [
+  { id: "all", label: "Semua" },
+  { id: "admin", label: "Admin Backoffice" },
+  { id: "web", label: "Web Developer" },
+  { id: "data", label: "Data Analyst" },
+];
+
 export const experiences = [
   /* ---------- Pengalaman kerja ---------- */
   {
     slug: "asisten-staf-skki-djpb",
     category: "kerja",
+    focus: ["web", "data", "admin"],
+    softSkills: ["Public speaking", "Komunikasi", "Kolaborasi lintas tim"],
     role: "Asisten Staf SKKI (Magang)",
     place: "Kanwil DJPb Sumatera Utara",
     period: "Nov 2025 - Mei 2026",
@@ -33,13 +42,21 @@ export const experiences = [
       "Membuat konten grafis edukasi untuk mendukung kebijakan dan kepatuhan internal.",
     ],
     document: null,
-    cover: "",
-    photos: [],
+    cover: "/experience/kerja/magang/cover-skki.webp",
+    photos: [
+        { type: "teknis", src: "/experience/kerja/magang/meeting-project.webp", caption: "Meeting project dashboard monitoring risiko" },
+        { type: "softskill", src: "/experience/kerja/magang/morning-call.webp", caption: "Moderator Morning Call" },
+        { type: "softskill", src: "/experience/kerja/magang/donor-darah.webp", caption: "Moderator Donor Darah" },
+        { type: "softskill", src: "/experience/kerja/magang/capacity-building.webp", caption: "MC Capacity Building" },
+        { type: "softskill", src: "/experience/kerja/magang/kebaktian.webp", caption: "MC Kebaktian" },
+      ],
     tone: "from-brand-teal/20 to-brand-navy/10",
   },
   {
     slug: "asisten-laboratorium-jaringan",
     category: "kerja",
+    focus: ["admin"], 
+    softSkills: ["Mengajar", "Komunikasi", "Manajemen waktu"],
     role: "Asisten Laboratorium Jaringan",
     place: "Information Technology Laboratory Group",
     period: "Sep 2023 - Des 2024",
@@ -60,6 +77,8 @@ export const experiences = [
   {
     slug: "pema-fasilkom-ti-usu",
     category: "organisasi",
+    focus: ["admin"], 
+    softSkills: ["Koordinasi", "Kepemimpinan"],
     role: "Anggota Bidang Agama (Sekretaris Divisi Agama Kristen)",
     place: "PEMA Fasilkom-TI USU",
     period: "Agu 2021 - Jun 2022",
@@ -79,6 +98,8 @@ export const experiences = [
   {
     slug: "steering-committee-pmb-2024",
     category: "kepanitiaan",
+    focus: ["admin"], 
+    softSkills: ["Kepemimpinan", "Pengambilan keputusan"],
     role: "Steering Committee",
     place: "Panitia Penerimaan Mahasiswa Baru Teknologi Informasi 2024",
     period: "Apr - Sep 2024",
@@ -95,6 +116,8 @@ export const experiences = [
   {
     slug: "bendahara-natal-2022",
     category: "kepanitiaan",
+    focus: ["admin", "data"], 
+    softSkills: ["Ketelitian", "Akuntabilitas"],
     role: "Bendahara",
     place: "Panitia Natal Teknologi Informasi 2022",
     period: "Okt - Des 2022",
@@ -112,6 +135,8 @@ export const experiences = [
   {
     slug: "bendahara-pmb-2022",
     category: "kepanitiaan",
+    focus: ["admin", "data"], 
+    softSkills: ["Ketelitian", "Akuntabilitas"],
     role: "Bendahara",
     place: "Panitia Penerimaan Mahasiswa Baru Teknologi Informasi 2022",
     period: "Apr - Sep 2022",

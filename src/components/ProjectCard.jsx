@@ -22,7 +22,9 @@ export default function ProjectCard({ project, index }) {
           <img
             src={project.image}
             alt=""
-            className="h-36 w-full object-cover sm:h-40"
+            className={`aspect-[20/9] w-full object-cover ${
+              project.imagePosition ?? "object-top"
+            }`}
             loading="lazy"
             decoding="async"
           />

@@ -11,7 +11,7 @@ export const projects = [
     featured: true,
     title: "Dashboard Pemantauan IKPAD",
     role: "Web Developer",
-    period: "Jun – Agu 2026",
+    period: "Jun - Agu 2026",
     org: "Kanwil DJPb Sumatera Utara",
     summary:
       "Dashboard web untuk memantau IKPAD (Indeks Kinerja Pelaksanaan Daerah), mulai dari pengumpulan data, penilaian, sampai tindak lanjut.",
@@ -48,7 +48,8 @@ export const projects = [
     impact: [],
 
     links: {}, // contoh: { demo: "https://...", repo: "https://github.com/..." }
-    image: "", // contoh: "/projects/ikpad.png" (taruh di public/projects/, gunakan data dummy)
+    image: "/projects/ikpad.png", // contoh: "/projects/ikpad.png" (taruh di public/projects/, gunakan data dummy)
+    imagePosition: "object-center",
     tags: ["Web Development", "Data"],
     tone: "from-brand-navy/20 to-brand-teal/20",
   },
@@ -58,7 +59,7 @@ export const projects = [
     featured: true,
     title: "Dashboard Pemantauan Risiko",
     role: "Asisten Staf SKKI (Magang)",
-    period: "Jan – Mar 2026",
+    period: "Jan - Mar 2026",
     org: "Kanwil DJPb Sumatera Utara",
     summary:
       "Dashboard web untuk memantau risiko internal secara real-time, sehingga pengawasan lebih cepat dan berbasis data.",
@@ -81,8 +82,9 @@ export const projects = [
 
     impact: [],
 
-    links: {},
-    image: "",
+    links: {demo: "https://s.id/Dashboard-Risiko"},
+    image: "/projects/risiko.png",
+    imagePosition: "object-center",
     tags: ["Data", "Web Development"],
     tone: "from-brand-teal/20 to-brand-navy/20",
   },
@@ -113,7 +115,8 @@ export const projects = [
     impact: [],
 
     links: {},
-    image: "",
+    image: "/projects/peternaku.png",
+    imagePosition: "object-center",
     tags: ["Web Development"],
     tone: "from-brand-navy/20 to-brand-teal/15",
   },
@@ -144,7 +147,8 @@ export const projects = [
     impact: [],
 
     links: {},
-    image: "",
+    image: "/projects/tobaquest.png",
+    imagePosition: "object-center",
     tags: ["Game Development"],
     tone: "from-brand-navy-soft/25 to-brand-teal/20",
   },

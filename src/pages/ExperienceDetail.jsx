@@ -57,12 +57,92 @@ function Photo({ src, alt, className }) {
   );
 }
 
-// Galeri: kumpulan thumbnail, klik untuk memperbesar (dialog dengan navigasi)
-function Gallery({ photos, label, columns = "grid-cols-2 sm:grid-cols-3" }) {
+function Chevron({ dir }) {
+  return (
+    <svg
+      className="size-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.25"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path d={dir === "left" ? "M15 5l-7 7 7 7" : "M9 5l7 7-7 7"} />
+    </svg>
+  );
+}
+
+// Panah carousel: di dalam area foto, sejajar dengan gambar (bukan caption)
+const arrowClass =
+  "absolute top-[calc(50%-1rem)] z-10 grid size-9 -translate-y-1/2 place-items-center rounded-full bg-white/95 text-brand-navy shadow-lg shadow-brand-navy/20 transition hover:scale-105 hover:bg-brand-navy hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-teal";
+
+// Galeri: thumbnail, klik untuk memperbesar (dialog dengan navigasi).
+// carousel: thumbnail ditampilkan 3 sekaligus, bisa digeser, dengan panah dan titik penanda
+function Gallery({
+  photos,
+  label,
+  columns = "grid-cols-2 sm:grid-cols-3",
+  carousel = false,
+}) {
   const dialogRef = useRef(null);
+  const trackRef = useRef(null);
   const [index, setIndex] = useState(null);
+  const [edge, setEdge] = useState({ start: true, end: true });
+  const [visible, setVisible] = useState([]);
 
   const photo = index === null ? null : photos[index];
+
+  // Perbarui status panah dan titik sesuai posisi geser
+  useEffect(() => {
+    if (!carousel) return;
+    const el = trackRef.current;
+    if (!el) return;
+
+    const update = () => {
+      setEdge({
+        start: el.scrollLeft <= 2,
+        end: el.scrollLeft + el.clientWidth >= el.scrollWidth - 2,
+      });
+
+      // Foto dianggap terlihat kalau minimal separuhnya ada di dalam area geser
+      const box = el.getBoundingClientRect();
+      setVisible(
+        Array.from(el.children).map((li) => {
+          const r = li.getBoundingClientRect();
+          const overlap =
+            Math.min(r.right, box.right) - Math.max(r.left, box.left);
+          return overlap >= r.width * 0.5;
+        }),
+      );
+    };
+
+    update();
+    el.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      el.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [carousel, photos.length]);
+
+  function slide(dir) {
+    const el = trackRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * el.clientWidth, behavior: "smooth" });
+  }
+
+  function scrollToPhoto(i) {
+    const el = trackRef.current;
+    const li = el?.children[i];
+    if (!el || !li) return;
+    const left =
+      li.getBoundingClientRect().left -
+      el.getBoundingClientRect().left +
+      el.scrollLeft;
+    el.scrollTo({ left, behavior: "smooth" });
+  }
 
   function open(i) {
     setIndex(i);
@@ -77,26 +157,92 @@ function Gallery({ photos, label, columns = "grid-cols-2 sm:grid-cols-3" }) {
     setIndex((i) => (i + step + photos.length) % photos.length);
   }
 
+  const thumbs = photos.map((p, i) => (
+    <li
+      key={p.src}
+      className={
+        carousel
+          ? "w-[70%] shrink-0 snap-start sm:w-[calc((100%-1.5rem)/3)]"
+          : undefined
+      }
+    >
+      <button
+        type="button"
+        onClick={() => open(i)}
+        aria-haspopup="dialog"
+        className="block w-full overflow-hidden rounded-xl border border-ink/10 text-left transition hover:border-brand-teal focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-teal"
+      >
+        <Photo
+          src={p.src}
+          alt={p.caption || `Dokumentasi ${label} ${i + 1}`}
+          className="aspect-[4/3] w-full bg-brand-teal-soft/60 object-contain"
+        />
+        {carousel && p.caption && (
+          <span className="block truncate px-3 py-2 text-xs font-medium text-ink/70">
+            {p.caption}
+          </span>
+        )}
+      </button>
+    </li>
+  ));
+
   return (
     <>
-      <ul className={`grid gap-3 ${columns}`}>
-        {photos.map((p, i) => (
-          <li key={p.src}>
-            <button
-              type="button"
-              onClick={() => open(i)}
-              aria-haspopup="dialog"
-              className="block w-full overflow-hidden rounded-xl border border-ink/10 transition hover:border-brand-teal focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-teal"
+      {carousel ? (
+        <div>
+          <div className="relative">
+            <ul
+              ref={trackRef}
+              className="flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
-              <Photo
-                src={p.src}
-                alt={p.caption || `Dokumentasi ${label} ${i + 1}`}
-                className="aspect-[4/3] w-full object-cover"
-              />
-            </button>
-          </li>
-        ))}
-      </ul>
+              {thumbs}
+            </ul>
+
+            {!edge.start && (
+              <button
+                type="button"
+                onClick={() => slide(-1)}
+                className={`${arrowClass} left-2`}
+              >
+                <Chevron dir="left" />
+                <span className="sr-only">Geser ke kiri</span>
+              </button>
+            )}
+            {!edge.end && (
+              <button
+                type="button"
+                onClick={() => slide(1)}
+                className={`${arrowClass} right-2`}
+              >
+                <Chevron dir="right" />
+                <span className="sr-only">Geser ke kanan</span>
+              </button>
+            )}
+          </div>
+
+          {/* Titik penanda: satu per foto, hanya muncul kalau ada foto yang tersembunyi */}
+          {!(edge.start && edge.end) && (
+            <div className="mt-3 flex justify-center gap-1.5">
+              {photos.map((p, i) => (
+                <button
+                  key={p.src}
+                  type="button"
+                  onClick={() => scrollToPhoto(i)}
+                  aria-label={`Lihat foto ${i + 1} dari ${photos.length}`}
+                  aria-current={visible[i] ? "true" : undefined}
+                  className={`h-2 rounded-full transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-teal ${
+                    visible[i]
+                      ? "w-5 bg-brand-teal"
+                      : "w-2 bg-brand-navy/20 hover:bg-brand-navy/40"
+                  }`}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      ) : (
+        <ul className={`grid gap-3 ${columns}`}>{thumbs}</ul>
+      )}
 
       <dialog
         ref={dialogRef}
@@ -204,6 +350,9 @@ export default function ExperienceDetail() {
   const doc = exp.document;
   const cover = exp.cover || exp.photos?.[0]?.src;
 
+  const techPhotos = exp.photos.filter((p) => p.type !== "softskill");
+const softPhotos = exp.photos.filter((p) => p.type === "softskill");
+
   return (
     <article className="mx-auto max-w-3xl px-5 pb-24 pt-28">
       <Link
@@ -217,11 +366,13 @@ export default function ExperienceDetail() {
         <img
           src={cover}
           alt={`Dokumentasi ${exp.role}, ${exp.place}`}
-          className="mt-6 h-56 w-full rounded-3xl border border-ink/10 object-cover sm:h-72"
+          className="mt-6 aspect-[20/9] w-full rounded-3xl border border-ink/10 object-cover object-top"
+          fetchPriority="high"
+          decoding="async"
         />
       ) : (
         <div
-          className={`mt-6 h-48 rounded-3xl bg-gradient-to-br ${exp.tone}`}
+          className={`mt-6 aspect-[20/9] w-full rounded-3xl bg-gradient-to-br ${exp.tone}`}
           aria-hidden="true"
         />
       )}
@@ -283,11 +434,35 @@ export default function ExperienceDetail() {
         </Block>
       )}
 
-      {exp.photos.length > 0 && (
-        <Block title="Dokumentasi">
-          <Gallery photos={exp.photos} label={exp.role} />
-        </Block>
-      )}
+   {exp.softSkills?.length > 0 && (
+  <Block title="Soft skill yang diasah">
+    <ul className="flex flex-wrap gap-2">
+      {exp.softSkills.map((s) => (
+        <li
+          key={s}
+          className="rounded-full bg-brand-teal-soft px-3 py-1 text-xs font-semibold text-brand-teal-dark"
+        >
+          {s}
+        </li>
+      ))}
+    </ul>
+  </Block>
+)}
+
+{techPhotos.length > 0 && (
+  <Block title="Dokumentasi pekerjaan">
+    <Gallery photos={techPhotos} label={`${exp.role} (pekerjaan)`} carousel />
+  </Block>
+)}
+
+{softPhotos.length > 0 && (
+  <Block title="Soft skill dalam aksi">
+    <p className="mb-3 text-sm leading-relaxed text-ink/70">
+      Peran di luar tugas teknis yang melatih komunikasi dan kepemimpinan.
+    </p>
+    <Gallery photos={softPhotos} label={`${exp.role} (soft skill)`} carousel />
+  </Block>
+)}
 
       {next.slug !== exp.slug && (
         <div className="mt-14 border-t border-ink/10 pt-6">

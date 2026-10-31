@@ -1,7 +1,6 @@
 /* Section Hero
 File: src/components/Hero.jsx */
 
-import { useEffect, useRef, useState } from "react";
 import CVDropdown from "./CVDropdown";
 import heroImg from "../assets/hero.png";
 
@@ -11,102 +10,6 @@ const bubbles = [
   { label: "Web Developer", position: "right-0 top-[40%]", delay: "1.2s" },
   { label: "Data Analyst", position: "left-0 top-[64%]", delay: "2.4s" },
 ];
-
-function ChevronIcon({ open }) {
-  return (
-    <svg
-      className={`size-4 transition-transform ${open ? "rotate-180" : ""}`}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-    >
-      <path d="M6 9l6 6 6-6" />
-    </svg>
-  );
-}
-
-function DownloadIcon() {
-  return (
-    <svg
-      className="size-4"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-    >
-      <path d="M12 4v11M7 11l5 5 5-5M5 20h14" />
-    </svg>
-  );
-}
-
-function CVDropdown() {
-  const [open, setOpen] = useState(false);
-  const wrapperRef = useRef(null);
-
-  // Tutup dropdown saat klik di luar atau menekan Escape
-  useEffect(() => {
-    if (!open) return;
-
-    const onClickOutside = (e) => {
-      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
-        setOpen(false);
-      }
-    };
-    const onKeyDown = (e) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-
-    document.addEventListener("mousedown", onClickOutside);
-    document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.removeEventListener("mousedown", onClickOutside);
-      document.removeEventListener("keydown", onKeyDown);
-    };
-  }, [open]);
-
-  return (
-    <div ref={wrapperRef} className="relative">
-      <button
-        type="button"
-        onClick={() => setOpen(!open)}
-        aria-expanded={open}
-        aria-controls="cv-menu"
-        className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-brand-navy/20 bg-white px-6 py-3.5 text-sm font-semibold text-brand-navy transition hover:border-brand-teal hover:bg-brand-teal-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-teal sm:w-auto"
-      >
-        Unduh CV
-        <ChevronIcon open={open} />
-      </button>
-
-      {open && (
-        <ul
-          id="cv-menu"
-          className="absolute left-0 top-full z-20 mt-2 w-full min-w-60 overflow-hidden rounded-xl border border-ink/10 bg-white p-1.5 shadow-xl shadow-brand-navy/10"
-        >
-          {cvOptions.map((cv) => (
-            <li key={cv.label}>
-              <a
-                href={cv.file}
-                download
-                onClick={() => setOpen(false)}
-                className="flex items-center justify-between gap-3 rounded-lg px-3.5 py-3 text-sm font-medium text-ink transition hover:bg-brand-teal-soft hover:text-brand-teal-dark focus-visible:outline-2 focus-visible:outline-brand-teal"
-              >
-                {cv.label}
-                <DownloadIcon />
-              </a>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
-}
 
 export default function Hero() {
   return (
