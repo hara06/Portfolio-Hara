@@ -11,28 +11,28 @@ export const profile = {
   name: "Pretty Ohara Hutasoit",
   role: "Web Developer & Data Enthusiast",
   location: "Medan, Indonesia",
-  email: "emailkamu@gmail.com",
+  email: "prettyhutasoit2@gmail.com",
 };
 
 export const channels = [
   {
     label: "Email",
-    value: "emailkamu@gmail.com",
-    href: "mailto:emailkamu@gmail.com",
+    value: "prettyhutasoit2@gmail.com",
+    href: "mailto:prettyhutasoit2@gmail.com",
   },
   {
     label: "LinkedIn",
-    value: "linkedin.com/in/usernamekamu",
-    href: "https://www.linkedin.com/in/usernamekamu",
+    value: "linkedin.com/in/pretty-ohara",
+    href: "http://www.linkedin.com/in/pretty-ohara/",
   },
   {
     label: "GitHub",
-    value: "github.com/usernamekamu",
-    href: "https://github.com/usernamekamu",
+    value: "github.com/hara06",
+    href: "https://github.com/hara06",
   },
   {
     label: "WhatsApp",
-    value: "+62 812-0000-0000",
-    href: "https://wa.me/628120000000",
+    value: "+62 812-6053-0812",
+    href: "https://wa.me/6281260530812",
   },
 ];
